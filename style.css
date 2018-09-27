@@ -40,10 +40,10 @@
 
 @media screen and (max-width: 500px){
     .btn{
-        font-size: 2rem;
+        font-size: 4rem;
     }
     .info, .info_2{
-        font-size: 1.6rem;
+        font-size: 2rem;
     }
 }
 
