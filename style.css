@@ -38,7 +38,7 @@
 }
 
 
-@media screen and (max-width: 500px){
+@media all and (max-width: 500px){
     .btn{
         font-size: 4rem;
     }
