@@ -23,7 +23,6 @@ menuBtn.addEventListener('click', function(){
 
 const colorsBtn = document.querySelectorAll('.colors-box-btn button');
 const colorsBoxInput = document.querySelectorAll('.colors-box-input');
-const colorsInput = document.querySelectorAll('.colors-box-input input');
 
 for(let color of colorsBtn){
     color.addEventListener('click', function(){
@@ -41,20 +40,50 @@ for(let color of colorsBtn){
         }
     });
 };
+/*----------------------------------------------------------------------------------------------*/
+const gradient = document.querySelector('.gradient-box');
+const colorsInput = document.querySelectorAll('.colors-box-input input');
 
 const inputChange = function(){
-    gradient.style.setProperty('background-image', 'linear-gradient('+randomRotate+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))');
+    gradient.style.setProperty('background-image', 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))');
 }
 for(let el of colorsInput){
     el.addEventListener('input', inputChange);
 }
 
+/*----------------------------------------------------------------------------------------------*/
+
+const rotate = document.querySelector('.rotate-box');
+const rotateCnt = document.querySelector('.rotate-content');
+const rotatePointer = document.querySelector('.rotate-pointer');
+//const rotateAngle = document.querySelector('.rotate-angle');
+let angleResult='';
+let rotateAngleText='';
+
+rotate.addEventListener('mousedown', function(e){
+    const x = (e.clientX - this.offsetLeft) - (rotate.clientWidth / 2 + 1); 
+    const y = (e.clientY - this.offsetTop - gradient.clientHeight) * (-1) + 55;
+    console.log('x = '+x);
+    console.log('y = '+y);
+    
+    let angle = Math.atan2(x, y)* 180 / Math.PI;
+    angleResult = Math.ceil(angle) + 'deg';
+//    rotateAngle.innerText = result;
+    rotateCnt.style.setProperty('transform','rotate('+angleResult+')');
+    
+    rotateAngleText = 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))';
+    
+    gradient.style.setProperty('background-image', rotateAngleText);
+});
+
+/*----------------------------------------------------------------------------------------------*/
+
 const randomBtn = document.querySelector('.random');
-const gradient = document.querySelector('.gradient-box');
 const randomColor = [];
 let randomColorOne = '';
 let randomColorTwo = '';
 let randomRotate = '';
+
 randomBtn.addEventListener('click', function(){
     for(let i=0; i<6 ;i++){
         randomColor[i] = Math.floor(Math.random()*256);
@@ -63,9 +92,13 @@ randomBtn.addEventListener('click', function(){
     randomColorOne = 'rgb('+randomColor[0]+','+randomColor[1]+','+randomColor[2]+')';
     randomColorTwo = 'rgb('+randomColor[3]+','+randomColor[4]+','+randomColor[5]+')';
     randomRotate = Math.floor(Math.random()*361) + 'deg';
+    angleResult = randomRotate;
+    rotateCnt.style.setProperty('transform','rotate('+randomRotate+')');
     
     gradient.style.setProperty('background-image', 'linear-gradient('+randomRotate+','+randomColorOne+','+randomColorTwo+')');
 });
+
+/*----------------------------------------------------------------------------------------------*/
 
 const orientationChange = function(){
     for(el of links){
@@ -74,45 +107,3 @@ const orientationChange = function(){
 }
 window.addEventListener('resize', orientationChange);
 window.addEventListener('load', orientationChange);
-
-
-const rotate = document.querySelector('.rotate-box');
-const rotateCnt = document.querySelector('.rotate-content');
-const rotatePointer = document.querySelector('.rotate-pointer');
-const gradientHeight = document.querySelector('.gradient-box');
-
-const rotateAngle = document.querySelector('.rotate-angle');
-
-rotate.addEventListener('mousedown', function(e){
-    const x = (e.clientX - this.offsetLeft);
-    const xx = rotate.clientWidth / 2 + 1;
-    const xxx = x - xx;
-    
-    const y = e.clientY - this.offsetTop - gradientHeight.clientHeight;
-    const yy = y * (-1) + 55;
-    
-    const result = Math.atan2(xxx, yy)* 180 / Math.PI;
-    console.log(result + '*');
-    rotateAngle.innerText = Math.ceil(result)+'*';
-    
-    console.log(xxx);
-    console.log(yy);
-    rotateCnt.style.setProperty('transform','rotate('+result+'deg)');
-});
-
-rotate.addEventListener('touchstart', function(e){
-    const x = (e.clientX - this.offsetLeft);
-    const xx = rotate.clientWidth / 2 + 1;
-    const xxx = x - xx;
-    
-    const y = e.clientY - this.offsetTop - gradientHeight.clientHeight;
-    const yy = y * (-1) + 55;
-    
-    const result = Math.atan2(xxx, yy)* 180 / Math.PI;
-    console.log(result + '*');
-    rotateAngle.innerText = Math.ceil(result)+'*';
-    
-    console.log(xxx);
-    console.log(yy);
-    rotateCnt.style.setProperty('transform','rotate('+result+'deg)');
-});
