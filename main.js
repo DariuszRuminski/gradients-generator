@@ -56,19 +56,18 @@ for(let el of colorsInput){
 const rotate = document.querySelector('.rotate-box');
 const rotateCnt = document.querySelector('.rotate-content');
 const rotatePointer = document.querySelector('.rotate-pointer');
-//const rotateAngle = document.querySelector('.rotate-angle');
 let angleResult='';
 let rotateAngleText='';
 
 rotate.addEventListener('mousedown', function(e){
     const x = (e.clientX - this.offsetLeft) - (rotate.clientWidth / 2 + 1); 
-    const y = (e.clientY - this.offsetTop - gradient.clientHeight) * (-1) + 55;
+    console.log(rotateCnt.clientHeight);
+    const y = (e.clientY - this.offsetTop - gradient.clientHeight) * (-1) + (rotateCnt.clientHeight / 2);
     console.log('x = '+x);
     console.log('y = '+y);
     
     let angle = Math.atan2(x, y)* 180 / Math.PI;
     angleResult = Math.ceil(angle) + 'deg';
-//    rotateAngle.innerText = result;
     rotateCnt.style.setProperty('transform','rotate('+angleResult+')');
     
     rotateAngleText = 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))';
@@ -100,10 +99,25 @@ randomBtn.addEventListener('click', function(){
 
 /*----------------------------------------------------------------------------------------------*/
 
-const orientationChange = function(){
+const lineHeightChange = function(){
     for(el of links){
         el.style.setProperty('line-height',el.clientHeight+'px');
     }
 }
-window.addEventListener('resize', orientationChange);
-window.addEventListener('load', orientationChange);
+window.addEventListener('resize', lineHeightChange);
+window.addEventListener('load', lineHeightChange);
+
+const forRotate = document.querySelector('.menu');
+const rotateSize = function(){
+    if(forRotate.clientWidth <= forRotate.clientHeight){
+        rotate.style.setProperty('width', (forRotate.clientWidth * 0.8) + 'px');
+        rotate.style.setProperty('height', (forRotate.clientWidth * 0.8) + 'px');
+        rotateCnt.style.setProperty('height', (forRotate.clientWidth * 0.8) + 'px');
+    }else{
+        rotate.style.setProperty('width', (forRotate.clientHeight * 0.8) + 'px');
+        rotate.style.setProperty('height', (forRotate.clientHeight * 0.8) + 'px');
+        rotateCnt.style.setProperty('height', (forRotate.clientHeight * 0.8) + 'px');
+    }
+}
+window.addEventListener('resize', rotateSize);
+window.addEventListener('load', rotateSize);
