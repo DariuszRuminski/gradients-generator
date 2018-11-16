@@ -122,7 +122,6 @@ div .option-active{
     top: -5px;
 /*    background-color: aqua;*/
 }
-
 .rotate-pointer{
     width: 30px;
     height: 30px;
@@ -133,7 +132,11 @@ div .option-active{
     bottom: 12px;
     box-shadow: 0 0 4px #fff;
 }
-
+.rotate-info-angle{
+    position: absolute;
+    color: #fff;
+    font-size: 2rem;
+}
 /*--------------------------------------------------------------------*/
 .buttons{
     height: 10%;
@@ -179,21 +182,3 @@ div .option-active{
         height: 15%;
     }
 }
-
-
-
-/*
-#copy{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: pink;
-}
-
-.aaa{
-    width: 200px;
-    height: 160px;
-    background-color: blue;
-    border: 1px solid #fff;
-    box-sizing: border-box;
-}*/

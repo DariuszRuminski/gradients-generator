@@ -40,7 +40,7 @@ for(let color of colorsBtn){
         }
     });
 };
-/*----------------------------------------------------------------------------------------------*/
+
 const gradient = document.querySelector('.gradient-box');
 const colorsInput = document.querySelectorAll('.colors-box-input input');
 
@@ -51,31 +51,35 @@ for(let el of colorsInput){
     el.addEventListener('input', inputChange);
 }
 
-/*----------------------------------------------------------------------------------------------*/
-
 const rotate = document.querySelector('.rotate-box');
 const rotateCnt = document.querySelector('.rotate-content');
 const rotatePointer = document.querySelector('.rotate-pointer');
+const rotateInfoAngle = document.querySelector('.rotate-info-angle');
 let angleResult='';
 let rotateAngleText='';
 
-rotate.addEventListener('mousedown', function(e){
-    const x = (e.clientX - this.offsetLeft) - (rotate.clientWidth / 2 + 1); 
-    console.log(rotateCnt.clientHeight);
-    const y = (e.clientY - this.offsetTop - gradient.clientHeight) * (-1) + (rotateCnt.clientHeight / 2);
-    console.log('x = '+x);
-    console.log('y = '+y);
-    
+rotate.addEventListener('mousedown',function(e){
+    let x,y;
+    if(window.innerHeight > window.innerWidth){
+        x = (e.clientX - this.offsetLeft) - (rotate.clientWidth / 2 + 5); 
+        y = (e.clientY - this.offsetTop - gradient.clientHeight) * (-1) + (rotateCnt.clientHeight / 2);  
+    }else{
+        x = (e.clientX - this.offsetLeft - gradient.clientWidth) - (rotateCnt.clientHeight / 2);
+        y = (e.clientY - this.offsetTop)*(-1) + (rotate.clientWidth / 2 + 5);
+    }
+
     let angle = Math.atan2(x, y)* 180 / Math.PI;
+    if(angle < -1){
+        angle = 360 + angle;  
+    }
+    rotateInfoAngle.innerText = Math.ceil(angle);
     angleResult = Math.ceil(angle) + 'deg';
     rotateCnt.style.setProperty('transform','rotate('+angleResult+')');
     
     rotateAngleText = 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))';
     
-    gradient.style.setProperty('background-image', rotateAngleText);
+    gradient.style.setProperty('background-image', rotateAngleText);  
 });
-
-/*----------------------------------------------------------------------------------------------*/
 
 const randomBtn = document.querySelector('.random');
 const randomColor = [];
@@ -90,14 +94,15 @@ randomBtn.addEventListener('click', function(){
     }
     randomColorOne = 'rgb('+randomColor[0]+','+randomColor[1]+','+randomColor[2]+')';
     randomColorTwo = 'rgb('+randomColor[3]+','+randomColor[4]+','+randomColor[5]+')';
-    randomRotate = Math.floor(Math.random()*361) + 'deg';
+    randomRotate = Math.floor(Math.random()*361);
+    rotateInfoAngle.innerText = randomRotate;
+    randomRotate += 'deg';
     angleResult = randomRotate;
     rotateCnt.style.setProperty('transform','rotate('+randomRotate+')');
     
+    
     gradient.style.setProperty('background-image', 'linear-gradient('+randomRotate+','+randomColorOne+','+randomColorTwo+')');
 });
-
-/*----------------------------------------------------------------------------------------------*/
 
 const lineHeightChange = function(){
     for(el of links){
@@ -107,16 +112,16 @@ const lineHeightChange = function(){
 window.addEventListener('resize', lineHeightChange);
 window.addEventListener('load', lineHeightChange);
 
-const forRotate = document.querySelector('.menu');
+const menuSize = document.querySelector('.menu');
 const rotateSize = function(){
-    if(forRotate.clientWidth <= forRotate.clientHeight){
-        rotate.style.setProperty('width', (forRotate.clientWidth * 0.8) + 'px');
-        rotate.style.setProperty('height', (forRotate.clientWidth * 0.8) + 'px');
-        rotateCnt.style.setProperty('height', (forRotate.clientWidth * 0.8) + 'px');
+    if(menuSize.clientWidth <= menuSize.clientHeight){
+        rotate.style.setProperty('width', (menuSize.clientWidth * 0.8) + 'px');
+        rotate.style.setProperty('height', (menuSize.clientWidth * 0.8) + 'px');
+        rotateCnt.style.setProperty('height', (menuSize.clientWidth * 0.8) + 'px');
     }else{
-        rotate.style.setProperty('width', (forRotate.clientHeight * 0.8) + 'px');
-        rotate.style.setProperty('height', (forRotate.clientHeight * 0.8) + 'px');
-        rotateCnt.style.setProperty('height', (forRotate.clientHeight * 0.8) + 'px');
+        rotate.style.setProperty('width', (menuSize.clientHeight * 0.8) + 'px');
+        rotate.style.setProperty('height', (menuSize.clientHeight * 0.8) + 'px');
+        rotateCnt.style.setProperty('height', (menuSize.clientHeight * 0.8) + 'px');
     }
 }
 window.addEventListener('resize', rotateSize);
