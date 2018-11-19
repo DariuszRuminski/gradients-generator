@@ -85,6 +85,7 @@ const rotateFunction = function(e){
     textarea.innerText = zmiennaWazna;
     
     rotate.addEventListener('mousemove', rotateFunction);
+    rotate.addEventListener('touchmove', rotateFunction);
 };
 
 rotate.addEventListener('mousedown', rotateFunction);
