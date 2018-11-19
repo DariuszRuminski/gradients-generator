@@ -22,7 +22,7 @@ menuBtn.addEventListener('click', function(){
 });
 
 const colorsBtn = document.querySelectorAll('.colors-box-btn button');
-const colorsBoxInput = document.querySelectorAll('.colors-box-input');
+const colorsBoxInput = document.querySelectorAll('.colors-box');
 
 for(let color of colorsBtn){
     color.addEventListener('click', function(){
@@ -32,20 +32,22 @@ for(let color of colorsBtn){
         this.classList.add('btn-active');
         
         if(colorsBtn[0].classList.contains('btn-active')){
-            colorsBoxInput[0].classList.add('colors-box-input-active');
-            colorsBoxInput[1].classList.remove('colors-box-input-active');
+            colorsBoxInput[0].classList.add('colors-box-active');
+            colorsBoxInput[1].classList.remove('colors-box-active');
         }else{
-            colorsBoxInput[0].classList.remove('colors-box-input-active');
-            colorsBoxInput[1].classList.add('colors-box-input-active');
+            colorsBoxInput[0].classList.remove('colors-box-active');
+            colorsBoxInput[1].classList.add('colors-box-active');
         }
     });
 };
 
 const gradient = document.querySelector('.gradient-box');
-const colorsInput = document.querySelectorAll('.colors-box-input input');
+const colorsInput = document.querySelectorAll('.colors-box input');
 
 const inputChange = function(){
     gradient.style.setProperty('background-image', 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))');
+    zmiennaWazna = 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))';
+    textarea.innerText = zmiennaWazna;
 }
 for(let el of colorsInput){
     el.addEventListener('input', inputChange);
@@ -54,11 +56,11 @@ for(let el of colorsInput){
 const rotate = document.querySelector('.rotate-box');
 const rotateCnt = document.querySelector('.rotate-content');
 const rotatePointer = document.querySelector('.rotate-pointer');
-const rotateInfoAngle = document.querySelector('.rotate-info-angle');
+const rotateInfoAngle = document.querySelector('.rotate-angle-box-info');
 let angleResult='';
 let rotateAngleText='';
 
-rotate.addEventListener('mousedown',function(e){
+const rotateFunction = function(e){
     let x,y;
     if(window.innerHeight > window.innerWidth){
         x = (e.clientX - this.offsetLeft) - (rotate.clientWidth / 2 + 5); 
@@ -78,14 +80,25 @@ rotate.addEventListener('mousedown',function(e){
     
     rotateAngleText = 'linear-gradient('+angleResult+',rgb('+colorsInput[0].value+','+colorsInput[1].value+','+colorsInput[2].value+')'+',rgb('+colorsInput[3].value+','+colorsInput[4].value+','+colorsInput[5].value+'))';
     
-    gradient.style.setProperty('background-image', rotateAngleText);  
+    gradient.style.setProperty('background-image', rotateAngleText);   
+    zmiennaWazna = rotateAngleText;
+    textarea.innerText = zmiennaWazna;
+    
+    rotate.addEventListener('mousemove', rotateFunction);
+};
+
+rotate.addEventListener('mousedown', rotateFunction);
+rotate.addEventListener("mouseup", function(e){
+    rotate.removeEventListener('mousemove', rotateFunction);
 });
+
 
 const randomBtn = document.querySelector('.random');
 const randomColor = [];
 let randomColorOne = '';
 let randomColorTwo = '';
 let randomRotate = '';
+let zmiennaWazna = '';
 
 randomBtn.addEventListener('click', function(){
     for(let i=0; i<6 ;i++){
@@ -102,6 +115,7 @@ randomBtn.addEventListener('click', function(){
     
     
     gradient.style.setProperty('background-image', 'linear-gradient('+randomRotate+','+randomColorOne+','+randomColorTwo+')');
+    textarea.innerText ='background-image: '+'linear-gradient( '+randomRotate+', '+randomColorOne+', '+randomColorTwo+');';
 });
 
 const lineHeightChange = function(){
@@ -126,3 +140,17 @@ const rotateSize = function(){
 }
 window.addEventListener('resize', rotateSize);
 window.addEventListener('load', rotateSize);
+
+const textarea = document.querySelector('.textarea-copy');
+
+
+const copyBtn = document.querySelector('.copy-btn');
+copyBtn.addEventListener('click', function(){
+    const el = document.createElement('textarea');
+    el.value = textarea.innerText;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+});
+
