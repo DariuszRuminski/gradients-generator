@@ -7,9 +7,7 @@ body{
 }
 .gradient-box{
     height: 45%;
-/*    box-shadow: 0 2px 20px #333;*/
     z-index: 10;
-    background-image: linear-gradient(30deg, #ba2eac, #2ea5ba);
 }
 /*--------------------------------------------------------------------*/
 .menu{
@@ -76,6 +74,10 @@ div .option-active{
     justify-content: space-around;
     align-items: center;
     height: 25%;
+    width: 100%;
+}
+.color-box-desktop{
+    display: none;
 }
 .colors-box{
     visibility: hidden;
@@ -124,6 +126,11 @@ div .option-active{
 .color-blue{
     background-color: #0000ff;
 }
+
+.color-1-desktop,
+.color-2-desktop{
+    display: none;
+}
 /*--------------------------------------------------------------------*/
 .rotate{
     justify-content: center;
@@ -141,13 +148,12 @@ div .option-active{
     width: 2px;
     position: relative;
     top: -5px;
-/*    background-color: aqua;*/
 }
 .rotate-pointer{
     width: 40px;
     height: 40px;
     border-radius: 50%;
-    background-color: red;
+    background-color: #f00;
     position: relative;
     right: 20px;
     bottom: 15px;
@@ -163,6 +169,44 @@ div .option-active{
     position: relative;
     top: -12px;
     left: -10px;
+}
+/*--------------------------------------------------------------------*/
+.copy{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.textarea-copy{
+    margin-top: 10px;
+    width: 95%;
+    height: 40%;
+    resize: none;
+    padding: 5px;
+    box-sizing: border-box;
+}
+.copy-button-box{
+    height: 60%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.copy-btn{
+    border-radius: 10px;
+    font-size: 1.5rem;
+    padding: 10px 20px;
+    background-color: royalblue;
+    border: 2px solid royalblue;
+    color: #fff;
+    transition: 0.3s;
+    cursor: pointer;
+}
+.copy-btn:hover,
+.copy-btn:focus{
+    color: royalblue;
+    background-color: #fff;
 }
 /*--------------------------------------------------------------------*/
 .buttons{
@@ -181,6 +225,7 @@ div .option-active{
     border-radius: 20px;
     color: #fff;
     font-size: 1.2rem;
+    cursor: pointer;
 }
 .buttons .menu-button{
     width: 30%;
@@ -209,49 +254,98 @@ div .option-active{
     }
 }
 
-#copy{
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
+@media screen and (min-width: 1024px){
+    .gradient-box{
+        height: 60%;
+        width: 100%;
+    }
+    .menu{
+        height: 40%;
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+    }
+    .menu-options{
+        display: none;
+    }
+    div .option-active{
+        position: static;
+    }
+    div .option{
+        display: flex;
+        width: 25%;
+        height: 100%;
+    }
+    div .colors{
+        width: 50%;
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .colors-box{
+        visibility: visible;
+        height: 75%;
+        width: 50%;
+    }
+    .colors-box-btn{
+        height: 25%;
+        width: 100%;
+    }
+    .color-1,
+    .color-2{
+        display: none;
+    }
+    .color-box-desktop{
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        box-sizing: border-box;
+    }
+    .color-1-desktop,
+    .color-2-desktop{
+        box-sizing: border-box;
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 50%;
+        height: 100%;
+        color: #fff;
+    }
+    .color-1-desktop{
+        border-right: 1px solid #fff;
+    }
+    .box-desktop{
+        border-right: 1px solid #fff;
+        box-sizing: border-box;
+    }
+    .color-desktop-box-color{
+        width: 20%;
+        height: 70%;
+    }
+    .rotate,
+    .colors{
+        box-sizing: border-box;
+        border-right: 1px solid #fff;
+    }
+    div .copy{
+        height: 70%;
+    }
+    .buttons{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 25%;
+        height: 10%;
+    }
+    .random{
+        height: 80%;
+    }
+    .menu-button{
+        display: none;
+    }
 }
-/*
-.textarea-copy{
-    margin: 5px;
-    width: 95%;
-    height: 60%;
-    white-space: nowrap;
-    overflow-x: scroll;
-    resize: none;
-}
-*/
-.copy-btn{
-    width: 30%;
-    border: 2px solid royalblue;
-    border-radius: 10px;
-    padding: 5px;
-    font-size: 1.4rem;
-    background-color: royalblue;
-    color: #fff;
-    margin-top: 20px;
-    transition: 0.3s;
-    cursor: pointer;
-}
-.copy-btn:focus{
-    color: royalblue;
-    background-color: #fff;
-}
-.textarea-copy{
-    box-sizing: border-box;
-    padding: 5px;
-    border-radius: 4px;
-    margin: 5px;
-    width: 95%;
-    height: 40%;
-    background-color: #fff;
-    color: #000;
-    font-size: 0.8rem;
-    letter-spacing: 1px;
-    font-family: sans-serif;
-}
-
